@@ -14,14 +14,13 @@ class UserBase(BaseModel):
     user_id:UUID=Field(...)
     email:EmailStr=Field(...)
 
-
 class UserLogin(UserBase):
     password:str =Field(
         ...,
         min_length=8,
         max_length=65,
+        example="Habp13632in"
     )
-
 
 class User(UserBase):
     
@@ -39,6 +38,8 @@ class User(UserBase):
     )
     birth_date:Optional[date]=Field(default=None)
 
+class UserRegister(User,UserLogin):
+    pass
 
 class Tweet(BaseModel):
     tweet_id: UUID = Field(...)
@@ -66,7 +67,24 @@ class Tweet(BaseModel):
     tags=["Users"]
 )
 def signup():
-    pass
+    """
+    SignUp a User 
+
+    This path operation regiter a user in the app
+
+    Parameters:
+        - Request body parameter:
+            - user: UserRegister
+            
+    Returns:
+    - A json with the basic user information:
+        - user_id    : UUID
+        - email      : Emailstr
+        - first_name : str
+        - last_name  : str
+        - birth_date : date
+
+    """
 
 ### Login a User
 @app.post(
